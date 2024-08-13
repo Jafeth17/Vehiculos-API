@@ -9,7 +9,6 @@ const validarVehiculo = [
     body('modelo').notEmpty().withMessage('El modelo es obligatorio'),
     body('placa')
         .notEmpty().withMessage('La placa es obligatoria')
-        .isAlphanumeric().withMessage('La placa debe ser alfanumérica')
 ];
 
 // Crear un nuevo vehículo

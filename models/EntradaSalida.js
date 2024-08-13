@@ -18,6 +18,10 @@ const EntradaSalida = sequelize.define('EntradaSalida', {
     kilometraje: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    tipo: {  
+        type: DataTypes.ENUM('entrada', 'salida'),
+        allowNull: false
     }
 }, {
     timestamps: true,

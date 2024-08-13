@@ -2,6 +2,7 @@ const Vehiculo = require('../models/vehiculo');
 
 // Crear un nuevo vehículo
 exports.crearVehiculo = async (req, res) => {
+    console.log("Body",req.body);
     try {
         const vehiculo = await Vehiculo.create(req.body);
         res.status(201).json(vehiculo);

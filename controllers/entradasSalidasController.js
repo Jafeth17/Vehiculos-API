@@ -28,3 +28,35 @@ exports.obtenerEntradasSalidas = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+exports.actualizarEntradaSalida = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const entradaSalida = await EntradaSalida.findByPk(id);
+        if (!entradaSalida) {
+            return res.status(404).json({ error: 'Entrada/Salida no encontrada' });
+        }
+
+        await entradaSalida.update(req.body);
+        res.json(entradaSalida);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+exports.eliminarEntradaSalida = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const entradaSalida = await EntradaSalida.findByPk(id);
+        if (!entradaSalida) {
+            return res.status(404).json({ error: 'Entrada/Salida no encontrada' });
+        }
+
+        await entradaSalida.destroy();
+        res.status(204).end();  
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};

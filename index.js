@@ -1,5 +1,6 @@
 const express = require('express');
-const sequelize = require('./config/db'); // Asegúrate de que la ruta sea correcta
+const sequelize = require('./config/db'); 
+const cors = require('cors');
 const Vehiculo = require('./models/vehiculo');
 const EntradaSalida = require('./models/EntradaSalida');
 
@@ -9,6 +10,7 @@ const entradasSalidasRouter = require('./routes/entradasSalidas');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(cors());
 app.use(express.json());
 
 // Registrar las rutas
