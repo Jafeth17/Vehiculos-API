@@ -2,12 +2,18 @@ const Vehiculo = require('../models/vehiculo');
 
 // Crear un nuevo vehículo
 exports.crearVehiculo = async (req, res) => {
-    console.log("Body",req.body);
     try {
+        const { placa } = req.body;
+        const vehiculoExistente = await Vehiculo.findOne({ where: { placa } });
+        
+        if (vehiculoExistente) {
+            return res.status(400).json({ error: 'Ya existe un vehículo con esta placa' });
+        }
+
         const vehiculo = await Vehiculo.create(req.body);
         res.status(201).json(vehiculo);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
 };
 
@@ -24,15 +30,21 @@ exports.obtenerVehiculos = async (req, res) => {
 // Actualizar un vehículo
 exports.actualizarVehiculo = async (req, res) => {
     try {
-        const [updated] = await Vehiculo.update(req.body, {
-            where: { id: req.params.id }
-        });
-        if (updated) {
-            const vehiculo = await Vehiculo.findByPk(req.params.id);
-            res.json(vehiculo);
-        } else {
-            res.status(404).json({ error: 'Vehículo no encontrado' });
+        const { id } = req.params;
+        const { placa } = req.body;
+        const vehiculoExistente = await Vehiculo.findOne({ where: { placa, id: { [Op.ne]: id } } });
+
+        if (vehiculoExistente) {
+            return res.status(400).json({ error: 'Ya existe un vehículo con esta placa' });
         }
+
+        const vehiculo = await Vehiculo.findByPk(id);
+        if (!vehiculo) {
+            return res.status(404).json({ error: 'Vehículo no encontrado' });
+        }
+
+        await vehiculo.update(req.body);
+        res.json(vehiculo);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
