@@ -1,4 +1,5 @@
 const EntradaSalida = require('../models/EntradaSalida');
+const vehiculo = require('../models/vehiculo');
 
 // Registrar una entrada/salida
 exports.crearEntradaSalida = async (req, res) => {
@@ -22,6 +23,10 @@ exports.obtenerEntradasSalidas = async (req, res) => {
     try {
         const entradasSalidas = await EntradaSalida.findAll({
             where: filter,
+            include: [{
+                model: vehiculo,
+                attributes: ['placa'], 
+            }]
         });
         res.json(entradasSalidas);
     } catch (error) {
