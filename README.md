@@ -1,4 +1,4 @@
-Vehiculos API
+## Vehiculos API
 
 Se deben tener instalados los siguientes primero en la maquina:
 - Node.js (v14 o superior)
@@ -16,7 +16,7 @@ reemplazar por los datos reales de tu entorno.
 4. Crear la base de datos "vehiculos" en MySQL.
 5. Una vez creada la base de datos se puede correr el proyecto mediante el comando: node index.js
 
-   ##Rutas Principales de la API
+## Rutas Principales de la API
 POST /vehiculos: Crear un nuevo vehículo.
 GET /vehiculos: Obtener la lista de vehículos.
 PUT /vehiculos/:id: Actualizar un vehículo existente.
